@@ -2,7 +2,6 @@
 # Nav2 导航参数配置文件
 # 包含：定位(AMCL)、行为树、控制器、代价地图、规划器等
 # ============================================================
-
 # ----------------------------------------------------------
 # 1. AMCL 自适应蒙特卡洛定位
 #    作用：通过激光+里程计估计机器人在地图上的位置
@@ -114,7 +113,6 @@ bt_navigator:
 bt_navigator_navigate_through_poses_rclcpp_node:
   ros__parameters:
     use_sim_time: True
-
 bt_navigator_navigate_to_pose_rclcpp_node:
   ros__parameters:
     use_sim_time: True
@@ -289,7 +287,6 @@ global_costmap:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 8.0     # 【调墙】原来3.0，加快衰减，墙边高代价区更窄
         inflation_radius: 0.30      # 【调墙】原来0.35，改小让窄通道不被堵死
-
       always_send_full_costmap: True
 
 # ----------------------------------------------------------
@@ -323,10 +320,8 @@ planner_server:
     use_sim_time: True
     planner_plugins: ["GridBased"]
     GridBased:
-      plugin: "nav2_navfn_planner/NavfnPlanner"  # Dijkstra算法
-      tolerance: 0.3                               # 起终点容差（米）
-      use_astar: true                             # false=Dijkstra, true=A*
-      allow_unknown: true                          # 允许在未知区域规划
+      plugin: "nav2_custom_planner/CustomPlanner"         #加载行进姿势的名字（xml）
+      interpolation_resolution: 0.1                     # 允许在未知区域规划
 
 # ----------------------------------------------------------
 # 9. smoother_server 路径平滑
